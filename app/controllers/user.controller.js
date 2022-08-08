@@ -25,7 +25,7 @@ function getUserMoney(uid) {
   });
 };
 
-//Get user investments
+//Get user investments from the array from mongoDB and send it to the client
 exports.getWallet = (req, res) => {
   User.findOne({ discordId: req.body.id }).exec((err, user) => {
     if (err) {
@@ -33,8 +33,10 @@ exports.getWallet = (req, res) => {
       return;
     };
     if (user) {
-      res.status(200).send({ money: user.money });
-    };
+      res.status(200).send({ investments: user.investments });
+    } else {
+      res.status(200).send({ investments: [] });
+    }
   });
 };
 
