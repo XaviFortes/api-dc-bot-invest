@@ -25,6 +25,19 @@ function getUserMoney(uid) {
   });
 };
 
+//Get user investments
+exports.getWallet = (req, res) => {
+  User.findOne({ discordId: req.body.id }).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    };
+    if (user) {
+      res.status(200).send({ money: user.investments });
+    }
+  });
+}
+
 
 exports.discordUser = (req, res) => {
   // get the user's money from the database and send it to the client with body id if user isn't found create user

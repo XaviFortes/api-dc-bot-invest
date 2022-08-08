@@ -18,6 +18,8 @@ module.exports = function(app) {
 
   app.get("/api/test/money", [authJwt.verifyToken], controller.getMoney);
 
+  app.get("/api/discord/wallet", controller.getWallet);
+
   app.get(
     "/api/test/mod",
     [authJwt.verifyToken, authJwt.isModerator],
