@@ -34,9 +34,9 @@ exports.getWallet = (req, res) => {
     };
     if (user) {
       res.status(200).send({ money: user.money });
-    }
+    };
   });
-}
+};
 
 
 exports.discordUser = (req, res) => {
