@@ -8,6 +8,10 @@ exports.getMoney = (req, res) => {
       res.status(500).send({ message: err });
       return;
     };
+    if (user.username !== req.body.username) {
+      user.username = req.body.username;
+      user.save();
+    }
     res.status(200).send({ money: user.money });
   });
 };
@@ -33,6 +37,10 @@ exports.getWallet = (req, res) => {
       return;
     };
     if (user) {
+      if (user.username !== req.body.username) {
+        user.username = req.body.username;
+        user.save();
+      }
       res.status(200).send({ investments: user.investments });
     } else {
       res.status(200).send({ investments: [] });
@@ -60,7 +68,12 @@ exports.discordUser = (req, res) => {
       return;
     };
     if (user) {
+      if (user.username !== req.body.username) {
+        user.username = req.body.username;
+        user.save();
+      }
       res.status(200).send({ money: user.money });
+
     } else {
       const user = new User({
         //username: req.body.username,
