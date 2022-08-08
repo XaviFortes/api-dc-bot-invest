@@ -68,6 +68,7 @@ exports.discordUser = (req, res) => {
         //password: bcrypt.hashSync(req.body.password, 8),
         money: 5000,
         discordId: req.body.id,
+        username: req.body.username,
       });
       console.log(req.body.id);
       user.save((err, user) => {
