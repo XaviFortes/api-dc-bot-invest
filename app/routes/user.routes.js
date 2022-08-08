@@ -18,6 +18,8 @@ module.exports = function(app) {
 
   app.post("/api/discord/wallet", controller.getWallet);
 
+  app.get("/api/discord/top", controller.getTop);
+
   app.get("/api/test/money", [authJwt.verifyToken], controller.getMoney);
 
   app.get(

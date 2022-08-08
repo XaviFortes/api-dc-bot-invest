@@ -40,6 +40,17 @@ exports.getWallet = (req, res) => {
   });
 };
 
+//Get top 10 richest users from mongoDB and send it to the client
+exports.getTop = (req, res) => {
+  User.find({}).sort({ money: -1 }).limit(10).exec((err, users) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    };
+    res.status(200).send({ users: users });
+  });
+}
+
 
 exports.discordUser = (req, res) => {
   // get the user's money from the database and send it to the client with body id if user isn't found create user
