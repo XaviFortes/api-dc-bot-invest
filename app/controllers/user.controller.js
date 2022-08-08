@@ -33,7 +33,7 @@ exports.getWallet = (req, res) => {
       return;
     };
     if (user) {
-      res.status(200).send({ money: user.investments });
+      res.status(200).send({ money: user.money });
     }
   });
 }
