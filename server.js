@@ -68,7 +68,10 @@ setInterval(() => {
 
         // If the last 10 prices doesnt have a value, then add a new value to the array
         if (investment.prices.length < 10) {
-          investment.prices.push(investment.price);
+          // Create new 10 prices for the investment and add it to the array
+          for (let i = 0; i < 10; i++) {
+            investment.prices.push(Math.floor(Math.random() * (100 - 1) + 1));
+          }
           investment.save();
         } else {
           // If the last 10 prices has a value, then remove the first value in the array and add a new value to the array
@@ -76,6 +79,8 @@ setInterval(() => {
           // calculate price based on the last 10 prices of each stock in the investment with the array on the investments model
           // Calculating also the average of the last 10 prices of each stock in the investment with the array on the investments model
           investment.price = investment.prices.reduce((a, b) => a + b, 0) / investment.prices.length;
+          // The 'a' in the reduce function is the initial value of the calculation, the 'b' is the value of the current iteration of the loop
+
           //investment.prices.push(investment.price);
           investment.save();
         }
