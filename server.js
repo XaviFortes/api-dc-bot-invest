@@ -70,7 +70,7 @@ setInterval(() => {
         if (investment.prices.length < 10) {
           // Create new 10 prices for the investment and add it to the array
           for (let i = 0; i < 10; i++) {
-            investment.prices.push(Math.floor(Math.random() * (100 - 1) + 1));
+            investment.prices.push(Math.floor(Math.random() * (1000 - 1) + 1));
           }
           investment.save();
         } else {
