@@ -6,6 +6,7 @@ const Investments = mongoose.model(
     name: String,
     code: String,
     price: Number,
+    prices: [Number],
     buys: Number,
     sells: Number,
   })
