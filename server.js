@@ -104,7 +104,7 @@ setInterval(() => {
       });
     }
   });
-}, 30 * 60000); //Change every 30 minutes
+}, 1 * 60000); //Change every 1 minutes
 
 
 function initial() {
