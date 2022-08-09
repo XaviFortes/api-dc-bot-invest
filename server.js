@@ -1,3 +1,4 @@
+#!/root/.nvm/versions/node/v16.13.1/bin/node
 const express = require("express");
 const cors = require("cors");
 const dbConfig = require("./app/config/db.config");
