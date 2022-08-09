@@ -63,14 +63,25 @@ setInterval(() => {
       console.log(err);
     } else {
       investments.forEach(investment => {
-        // Set investment price depending on buy and sells of the investment and the current price of the investment (price is updated every 5 minutes) 
-        // investment.price = investment.price + (investment.buy - investment.sell);
-        // Calculate the price of the investment based on the amount of buys and sells of the market and the current price of the investment and fluctuate the price of the investment
-        investment.price = clamp(investment.price + (investment.buys / investment.sells) + (Math.random() * 24 - 14) , 10, 1000);
+        
+        // Create a number based on the investment's current price and the investment's current amount
+        const newValue = investment.currentAmount * investment.currentPrice + (investment.currentAmount * investment.currentPrice * 0.01);
+        let newAmount = newValue / investment.currentPrice;
+        newAmount = clamp(newAmount, 0, currentAmount);
+        newAmount = Math.round(newAmount * 100) / 100;
+        let newPrice = newValue / newAmount;
+        newPrice = Math.round(newPrice * 100) / 100;
+        investment.currentAmount = newAmount;
+        investment.currentPrice = newPrice;
+        investment.save();
+
+        //let random = clamp(Math.random() * 100, 0, 100);
+
+        ///investment.price = clamp(investment.price + (investment.buys / investment.sells) + (Math.random() * 24 - 15) , 10, 1000);
 
         // investment.price = clamp(Math.floor(Math.random() * 26 - 12) + investment.price + 0.1, 1, 1000);
         //investment.price = investment.price + Math.random() * 30 - 5;
-        investment.save();
+        ///investment.save();
       });
     }
   });
