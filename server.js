@@ -76,6 +76,8 @@ setInterval(() => {
         } else {
           // If the last 10 prices has a value, then remove the first value in the array and add a new value to the array
           investment.prices.shift();
+          investment.prices.push(Math.floor(Math.random() * (1000 - 1) + 1));
+          
           // calculate price based on the last 10 prices of each stock in the investment with the array on the investments model
           // Calculating also the average of the last 10 prices of each stock in the investment with the array on the investments model
           investment.price = investment.prices.reduce((a, b) => a + b, 0) / investment.prices.length;
