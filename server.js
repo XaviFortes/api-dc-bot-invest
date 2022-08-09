@@ -66,19 +66,19 @@ setInterval(() => {
     } else {
       investments.forEach(investment => {
 
-        
-        // calculate price based on the last 10 prices of each stock in the investment with the array on the investments model
-        let last10prices = investment.prices.slice(-10);
-        let sum = 0;
-        last10prices.forEach(price => {
-          sum += price;
-        }),
-        average = sum / last10prices.length;
-        let newPrice = average + (Math.random() - 0.5) * average * 0.1;
-        newPrice = clamp(newPrice, 0, 100);
-        investment.prices.push(newPrice);
-        investment.price = newPrice;
-        investment.save();
+        // If the last 10 prices doesnt have a value, then add a new value to the array
+        if (investment.prices.length < 10) {
+          investment.prices.push(investment.price);
+          investment.save();
+        } else {
+          // If the last 10 prices has a value, then remove the first value in the array and add a new value to the array
+          investment.prices.shift();
+          // calculate price based on the last 10 prices of each stock in the investment with the array on the investments model
+          // Calculating also the average of the last 10 prices of each stock in the investment with the array on the investments model
+          investment.price = investment.prices.reduce((a, b) => a + b, 0) / investment.prices.length;
+          //investment.prices.push(investment.price);
+          investment.save();
+        }
 
         
         
