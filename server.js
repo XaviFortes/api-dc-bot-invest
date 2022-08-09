@@ -57,6 +57,19 @@ app.listen(PORT, () => {
 
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max);
 
+// create a 2d array to store the last 10 prices of each stock in the investments collection
+function getLastPrices(investments) {
+  let lastPrices = [];
+  for (let i = 0; i < investments.length; i++) {
+    lastPrices[i] = [];
+    for (let j = 0; j < investments[i].stocks.length; j++) {
+      lastPrices[i][j] = investments[i].stocks[j].price;
+    }
+  }
+  return lastPrices;
+}
+
+
 const Investments = require("./app/models/investments.model");
 setInterval(() => {
   Investments.find({}, (err, investments) => {
@@ -64,17 +77,22 @@ setInterval(() => {
       console.log(err);
     } else {
       investments.forEach(investment => {
+
+        // calculate 
         
-        // Create a number based on the investment's current price and the investment's current amount
-        const newValue = investment.currentAmount * investment.currentPrice + (investment.currentAmount * investment.currentPrice * 0.01);
-        let newAmount = newValue / investment.currentPrice;
-        newAmount = clamp(newAmount, 0, currentAmount);
-        newAmount = Math.round(newAmount * 100) / 100;
-        let newPrice = newValue / newAmount;
-        newPrice = Math.round(newPrice * 100) / 100;
-        investment.currentAmount = newAmount;
-        investment.currentPrice = newPrice;
+        // calculate price based on the last 10 prices of each stock in the investment
+        let lastPrices = getLastPrices(investment);
+        let sum = 0;
+        for (let i = 0; i < lastPrices[0].length; i++) {
+          sum += lastPrices[0][i];
+        }
+        investment.price = sum / lastPrices[0].length;
         investment.save();
+        
+        // 
+
+
+
 
         //let random = clamp(Math.random() * 100, 0, 100);
 
