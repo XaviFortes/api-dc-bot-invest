@@ -1,6 +1,11 @@
 const db = require("../models");
+const fs = require("fs");
 const User = db.user;
 const Investments = db.investments;
+
+var logger = fs.createWriteStream('log.txt', {
+  flags: 'a' // 'a' means appending (old data will be preserved)
+})
 
 exports.getMoney = (req, res) => {
   User.findById(req.userId).exec((err, user) => {
@@ -32,6 +37,7 @@ exports.kick = (req, res) => {
     } else {
       user.money = user.money - 20000;
       user.save();
+      logger.write(`${new Date()} - ${user.username} kicked somebody\n`);
       res.status(200).send({ message: "ok" });
     }
   });
