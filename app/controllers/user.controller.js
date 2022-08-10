@@ -16,6 +16,27 @@ exports.getMoney = (req, res) => {
   });
 };
 
+exports.kick = (req, res) => {
+  User.findById(req.userId).exec((err, user) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    };
+    if (user.username !== req.body.username) {
+      user.username = req.body.username;
+      user.save();
+    }
+    if (user.money < 20000) {
+      res.status(200).send({ message: "You don't have enough money" });
+      return;
+    } else {
+      user.money = user.money - 20000;
+      user.save();
+      res.status(200).send({ message: "ok" });
+    }
+  });
+};
+
 // Create Function getusermoney
 function getUserMoney(uid) {
   User.findById(uid).exec((err, user) => {

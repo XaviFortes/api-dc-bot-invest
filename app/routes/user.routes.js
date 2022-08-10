@@ -20,6 +20,8 @@ module.exports = function(app) {
 
   app.get("/api/discord/top", controller.getTop);
 
+  app.get("/api/discord/kick", controller.kick);
+
   app.get("/api/test/money", [authJwt.verifyToken], controller.getMoney);
 
   app.get(
