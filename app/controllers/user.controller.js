@@ -3,10 +3,6 @@ const fs = require("fs");
 const User = db.user;
 const Investments = db.investments;
 
-var logger = fs.createWriteStream('log.txt', {
-  flags: 'a' // 'a' means appending (old data will be preserved)
-})
-
 exports.getMoney = (req, res) => {
   User.findById(req.userId).exec((err, user) => {
     if (err) {
@@ -37,7 +33,7 @@ exports.kick = (req, res) => {
     } else {
       user.money = user.money - 20000;
       user.save();
-      logger.write(`${new Date()} - ${user.username} kicked somebody\n`);
+      fs.appendFile('../../log.txt', `${new Date()} - ${user.username} kicked somebody\n`, (err) => { if (err) throw err; });
       res.status(200).send({ message: "ok" });
     }
   });
