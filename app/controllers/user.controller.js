@@ -17,7 +17,7 @@ exports.getMoney = (req, res) => {
   });
 };
 
-async function kickLogs(user) {
+function kickLogs(user) {
   try {
     fs.appendFile("log.txt", "a");
 
