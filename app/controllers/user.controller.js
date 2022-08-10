@@ -33,9 +33,9 @@ exports.kick = (req, res) => {
     } else {
       user.money = user.money - 20000;
       user.save();
-      fs.appendFile("log.txt", "a");
+      fs.appendFileSync("log.txt", "a");
 
-      fs.appendFile("../logs/log.txt", `${new Date()} - ${user.username} kicked somebody\n`, function (err) { if (err) throw err; });
+      fs.appendFileSync("../logs/log.txt", `${new Date()} - ${user.username} kicked somebody\n`, function (err) { if (err) throw err; });
       res.status(200).send({ message: "ok" });
     }
   });
