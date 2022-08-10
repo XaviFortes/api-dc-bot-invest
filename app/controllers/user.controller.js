@@ -17,7 +17,7 @@ exports.getMoney = (req, res) => {
 };
 
 exports.kick = (req, res) => {
-  User.findById(req.id).exec((err, user) => {
+  User.findOne({ discordId: req.body.id }).exec((err, user) => {
     if (err) {
       res.status(500).send({ message: err });
       return;
