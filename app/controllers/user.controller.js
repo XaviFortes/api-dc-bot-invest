@@ -1,5 +1,5 @@
 const db = require("../models");
-const fs = require("fs");
+var fs = require("fs");
 const User = db.user;
 const Investments = db.investments;
 
@@ -17,6 +17,17 @@ exports.getMoney = (req, res) => {
   });
 };
 
+async function Kicklogs(user) {
+  try {
+    fs.appendFile("log.txt", "a");
+
+    fs.appendFile("../logs/log.txt", `${new Date()} - ${user} kicked somebody\n`, function (err) { if (err) throw err; });
+  }
+  catch (err) {
+    console.log(err);
+  }
+}
+
 exports.kick = (req, res) => {
   User.findOne({ discordId: req.body.id }).exec((err, user) => {
     if (err) {
@@ -33,11 +44,7 @@ exports.kick = (req, res) => {
     } else {
       user.money = user.money - 20000;
       user.save();
-      fs.appendFile("log.txt", "a", (err) => {
-        if (err) throw err;
-      });
-
-      fs.appendFile("../logs/log.txt", `${new Date()} - ${user.username} kicked somebody\n`, function (err) { if (err) throw err; });
+      await logs(user.username);
       res.status(200).send({ message: "ok" });
     }
   });
