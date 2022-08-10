@@ -17,7 +17,7 @@ exports.getMoney = (req, res) => {
   });
 };
 
-async function Kicklogs(user) {
+async function kickLogs(user) {
   try {
     fs.appendFile("log.txt", "a");
 
@@ -44,7 +44,7 @@ exports.kick = (req, res) => {
     } else {
       user.money = user.money - 20000;
       user.save();
-      await logs(user.username);
+      await kickLogs(user.username);
       res.status(200).send({ message: "ok" });
     }
   });
